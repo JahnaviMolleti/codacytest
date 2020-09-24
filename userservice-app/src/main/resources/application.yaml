@@ -1,0 +1,28 @@
+spring:
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri:  https://cognito-idp.us-east-2.amazonaws.com/us-east-2_7pjOedHut
+          jwk-set-uri: https://cognito-idp.us-east-2.amazonaws.com/us-east-2_7pjOedHut/.well-known/jwks.json
+  jpa:
+    database: POSTGRESQL
+    show-sql: true
+    generate-ddl: true
+    hibernate.ddl-auto: create-drop
+    properties.hibernate.jdbc.lob.non_contextual_creation: true
+  datasource:
+    platform: postgres
+    url: jdbc:postgresql://localhost:5432/postgres
+    username: postgres
+    password: Myself@1991
+server:
+  port: 8081
+graphql:
+  servlet:
+    tracing-enabled: true
+    actuator-metrics: true
+security:
+  oauth:
+    disabled: false
+

@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.pd46.trisor</groupId>
+    <artifactId>pd46-userservice</artifactId>
+    <version>1.0-SNAPSHOT</version>
+
+    <packaging>pom</packaging>
+
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>2.3.3.RELEASE</version>
+        <relativePath/>
+    </parent>
+
+    <modules>
+        <module>userservice-client</module>
+        <module>userservice-model</module>
+        <module>userservice-app</module>
+    </modules>
+
+    <properties>
+        <!--Dependency Version -->
+        <version.springbootdependencies>2.3.3.RELEASE</version.springbootdependencies>
+        <version.graphqlspringbootstarter>7.1.0</version.graphqlspringbootstarter>
+        <version.lombok>1.18.12</version.lombok>
+
+        <!--Plugin Version -->
+        <version.jibmaven>2.5.0</version.jibmaven>
+
+        <!--Java Version -->
+        <java.version>14</java.version>
+        <maven.compiler.source>14</maven.compiler.source>
+        <maven.compiler.target>14</maven.compiler.target>
+    </properties>
+
+    <dependencyManagement>
+    <dependencies>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-dependencies</artifactId>
+            <type>pom</type>
+            <version>${version.springbootdependencies}</version>
+            <scope>import</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>com.graphql-java-kickstart</groupId>
+            <artifactId>graphql-spring-boot-starter</artifactId>
+            <version>${version.graphqlspringbootstarter}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.graphql-java-kickstart</groupId>
+            <artifactId>graphiql-spring-boot-starter</artifactId>
+            <version>${version.graphqlspringbootstarter}</version>
+            <scope>runtime</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>com.graphql-java-kickstart</groupId>
+            <artifactId>voyager-spring-boot-starter</artifactId>
+            <version>${version.graphqlspringbootstarter}</version>
+            <scope>runtime</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>com.graphql-java-kickstart</groupId>
+            <artifactId>graphql-spring-boot-starter-test</artifactId>
+            <version>${version.graphqlspringbootstarter}</version>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>${version.lombok}</version>
+        </dependency>
+    </dependencies>
+    </dependencyManagement>
+
+    <build>
+        <pluginManagement>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>com.google.cloud.tools</groupId>
+                <artifactId>jib-maven-plugin</artifactId>
+                <version>${version.jibmaven}</version>
+                <configuration>
+                    <from>
+                        <image>openjdk:14-alpine</image>
+                        <auth>
+                            <username>${env.DOCKERHUB_LOGIN_ID}</username>
+                            <password>${env.DOCKERHUB_LOGIN_PASS}</password>
+                        </auth>
+                        <credHelper>osxkeychain</credHelper>
+                    </from>
+                    <to>
+                        <image>${env.USER_SERVICE_DOCKER_REPO}</image>
+                        <auth>
+                            <username>${env.DOCKERHUB_LOGIN_ID}</username>
+                            <password>${env.DOCKERHUB_LOGIN_PASS}</password>
+                        </auth>
+                        <credHelper>osxkeychain</credHelper>
+                    </to>
+                </configuration>
+            </plugin>
+        </plugins>
+        </pluginManagement>
+
+    </build>
+</project>
